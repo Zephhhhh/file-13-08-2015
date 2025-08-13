@@ -3,61 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>File 13.08.2035</title>
+<title>File 13-08-2015</title>
 <style>
   body {
     margin: 0;
-    height: 100vh;
-    background: black;
+    background-color: black;
     color: red;
     font-family: 'Courier New', Courier, monospace;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
     overflow: hidden;
-  }
-
-  #text {
-    font-size: 1.5em;
-    line-height: 1.8em;
-    white-space: pre-wrap;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
     text-align: center;
-    max-width: 80%;
   }
-
-  /* Blood drip effect */
+  #text {
+    white-space: pre-line;
+    font-size: 1.5em;
+    max-width: 90%;
+  }
   .blood-drip {
     position: absolute;
-    top: -50px;
-    width: 5px;
-    height: 50px;
-    background: red;
+    top: -30px;
+    width: 10px;
+    height: 30px;
+    background-color: darkred;
     border-radius: 50%;
-    animation: drip 2s infinite;
+    animation-name: drip;
+    animation-timing-function: linear;
   }
-
   @keyframes drip {
-    0% { top: -50px; opacity: 1; }
-    80% { top: 90vh; opacity: 1; }
-    100% { top: 90vh; opacity: 0; }
+    0% { top: -30px; opacity: 1; }
+    100% { top: 100vh; opacity: 0; }
+  }
+  button {
+    margin-top: 50px;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    cursor: pointer;
+    background-color: red;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    display: none; /* initially hidden */
   }
 </style>
 </head>
 <body>
 
 <div id="text"></div>
+<button id="continueBtn">TAP TO CONTINUE</button>
 
 <script>
-const message = ` IFEOLUWA <br> You dont know me. But I know you. <br> And I know where you will be on the 13th of August, 2025. <br> If you wish to live you must follow my instructions <br> You will solve every clue <br> You will unlock every code <br> Fail? You wind up dead on your birthday.<br> Your time stars now';
+const message = `THERE WILL BE A KILLING
+ON THE 13TH OF AUGUST 2025
+
+FIND THE CLUES,
+UNLOCK THE MURDER MYSTERY,
+AND STOP THE KILLING.
+THE KILLING IS YOU.`;
+
 const textEl = document.getElementById('text');
+const continueBtn = document.getElementById('continueBtn');
 let index = 0;
 
+// Typing effect
 function typeWriter() {
   if(index < message.length) {
     textEl.innerHTML += message.charAt(index);
     index++;
     setTimeout(typeWriter, 100); // slower typing speed
+  } else {
+    continueBtn.style.display = 'inline-block'; // show button when done
   }
 }
 
@@ -71,32 +89,15 @@ function createBloodDrip() {
   setTimeout(() => drip.remove(), 3000);
 }
 
-// Spawn multiple drips continuously
 setInterval(createBloodDrip, 300);
 
-// Start typing
+// Redirect to levels.html
+continueBtn.onclick = () => {
+  window.location.href = "levels.html";
+};
+
 typeWriter();
-// Function to create a "Tap to Continue" button
-function showContinueButton() {
-  const btn = document.createElement('button');
-  btn.innerText = "TAP TO CONTINUE";
-  btn.style.marginTop = "50px";
-  btn.style.padding = "15px 30px";
-  btn.style.fontSize = "1.2em";
-  btn.style.cursor = "pointer";
-  btn.style.backgroundColor = "red";
-  btn.style.color = "black";
-  btn.style.border = "none";
-  btn.style.borderRadius = "5px";
-  btn.onclick = () => {
-    window.location.href = "levels.html"; // go to your first level
-  };
-  document.body.appendChild(btn);
-}
 </script>
 
 </body>
 </html>
-
-
-
