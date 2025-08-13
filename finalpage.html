@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday</title>
+<style>
+    body {
+        margin: 0;
+        background: linear-gradient(to bottom, #87cefa, #ffffff);
+        text-align: center;
+        font-family: Arial, sans-serif;
+        overflow-x: hidden;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: clamp(1.8rem, 5vw, 3rem);
+        color: white;
+        text-shadow: 2px 2px 5px #000;
+        margin-top: 20px;
+    }
+
+    img {
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+        margin-top: 20px;
+        border-radius: 15px;
+        box-shadow: 0px 0px 20px rgba(0,0,0,0.4);
+    }
+
+    p {
+        font-size: clamp(1rem, 2.5vw, 1.2rem);
+        color: #000;
+        max-width: 800px;
+        margin: 20px auto;
+        line-height: 1.6;
+        background: rgba(255, 255, 255, 0.7);
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9999;
+    }
+</style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<h1>Happy Sixteenth Birthday David!!!!</h1>
+
+<img src="IMG_2238.JPG" alt="Birthday Picture">
+
+<p>
+HELLOOOOOO!!!!! I originally wanted to do a video but my coding abilities did not reach so this is the best I can do. Embarking on this project took a toll on me because I couldn't get it played out exactly how I wanted, however, today is not about me; it's about you. I am so proud of you for how far you have come and how much you have grown. I am literally so grateful for the positive effect you have made in my life. It is my prayer that you never forget how loved and cared for you are. You will always have every single one of the 16 members of this game to count on and even more. You will always have file-13-08-2015. And never forget, the answer to what you were searching for was YOU, it will always be inside YOU.  
+Happy Birthday Ife.
+</p>
+
+<audio id="bg-music" autoplay>
+    <source src="frank ocean - white ferrari (lyrics).mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// Auto-play music with mobile support
+document.addEventListener("DOMContentLoaded", () => {
+    const audio = document.getElementById("bg-music");
+    audio.volume = 0.6;
+    audio.play().catch(() => {
+        document.body.addEventListener("click", () => audio.play(), { once: true });
+    });
+});
+
+// Confetti burst from center
+const canvas = document.getElementById('confetti');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const confettiParticles = [];
+const colors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF', '#FFA500'];
+
+for (let i = 0; i < 150; i++) {
+    confettiParticles.push({
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 2,
+        r: Math.random() * 6 + 2,
+        dx: (Math.random() - 0.5) * 10,
+        dy: (Math.random() - 0.5) * 10,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        alpha: 1
+    });
+}
+
+function drawConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    confettiParticles.forEach((p) => {
+        ctx.globalAlpha = p.alpha;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+    });
+}
+
+function updateConfetti() {
+    confettiParticles.forEach((p) => {
+        p.x += p.dx;
+        p.y += p.dy;
+        p.alpha -= 0.01;
+    });
+}
+
+function animateConfetti() {
+    drawConfetti();
+    updateConfetti();
+    requestAnimationFrame(animateConfetti);
+}
+
+animateConfetti();
+
+// Resize confetti canvas dynamically
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
