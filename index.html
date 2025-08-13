@@ -98,35 +98,7 @@
   <p>Tap anywhere to continue...</p>
 </div>
 
-<!-- Audio -->
-<audio id="typeSound" src="typewriter.mp3" preload="auto"></audio>
-<audio id="bgMusic" src="DarkRed.mp3" preload="auto" loop></audio>
-
-<script>
-  // Tap anywhere to start
-  document.getElementById("startScreen").addEventListener("click", function() {
-    // Hide start screen
-    this.style.display = "none";
-
-    // Play typewriter sound once
-    let typeSound = document.getElementById("typeSound");
-    typeSound.play().catch(err => console.log("Type sound error:", err));
-
-    // Start background music
-    let bgMusic = document.getElementById("bgMusic");
-    bgMusic.play().catch(err => console.log("BG music error:", err));
-
-    // Call your function to start the text animation or go to next level
-    startTextAnimation(); // <-- replace this with your actual function
-  });
-</script>
-
   <div id="blood-pool"></div>
-
-    <div>
-        <div id="text"></div>
-        <div id="continue">[ Tap anywhere to continue ]</div>
-    </div>
 
     <!-- Audio -->
     <audio id="bgMusic" loop>
@@ -189,6 +161,7 @@
     </script>
 </body>
 </html>
+
 
 
 
