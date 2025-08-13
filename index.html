@@ -1,170 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File 13.08.2035</title>
-    <style>
-        body {
-            background-color: black;
-            color: red;
-            font-family: 'Courier New', monospace;
-            font-size: 1.5em;
-            text-align: center;
-            padding: 20px;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        #text {
-            white-space: pre-wrap;
-            max-width: 800px;
-            z-index: 2;
-            position: relative;
-        }
-        #continue {
-            display: none;
-            margin-top: 20px;
-            font-size: 1.2em;
-            color: white;
-            cursor: pointer;
-            z-index: 2;
-        }
-        #continue:hover {
-            text-decoration: underline;
-        }
-        #startOverlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: black;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5em;
-            cursor: pointer;
-            z-index: 10;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>File 13.08.2035</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: black;
+    color: red;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+  }
 
-        /* Blood pool at top */
-        #blood-pool {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 30px;
-            background: radial-gradient(circle at center, #8b0000 0%, #4b0000 80%);
-            box-shadow: 0 5px 10px rgba(139, 0, 0, 0.5);
-            animation: ooze 3s ease-in-out infinite alternate;
-            z-index: 1;
-        }
-        @keyframes ooze {
-            0% { height: 25px; }
-            100% { height: 35px; }
-        }
+  #text {
+    font-size: 1.5em;
+    line-height: 1.8em;
+    white-space: pre-wrap;
+    text-align: center;
+    max-width: 80%;
+  }
 
-        /* Blood drips */
-        .blood-drip {
-            position: absolute;
-            top: 25px;
-            background: radial-gradient(circle at 50% 50%, #8b0000, #4b0000);
-            border-radius: 50%;
-            animation: dripFall linear forwards;
-            z-index: 1;
-        }
-        @keyframes dripFall {
-            0% {
-                transform: translateY(0) scaleY(1);
-                opacity: 1;
-            }
-            50% {
-                transform: translateY(40vh) scaleY(1.5);
-                opacity: 0.9;
-            }
-            100% {
-                transform: translateY(100vh) scaleY(0.8);
-                opacity: 0;
-            }
-        }
-    </style>
+  /* Blood drip effect */
+  .blood-drip {
+    position: absolute;
+    top: -50px;
+    width: 5px;
+    height: 50px;
+    background: red;
+    border-radius: 50%;
+    animation: drip 2s infinite;
+  }
+
+  @keyframes drip {
+    0% { top: -50px; opacity: 1; }
+    80% { top: 90vh; opacity: 1; }
+    100% { top: 90vh; opacity: 0; }
+  }
+</style>
 </head>
 <body>
-     <!-- Tap to Start Button -->
-<div id="startScreen" style="display:flex; justify-content:center; align-items:center; height:100vh; background:black; color:red; flex-direction:column;">
-  <h1>File 13.08.2035</h1>
-  <p>Tap anywhere to continue...</p>
-</div>
 
-  <div id="blood-pool"></div>
+<div id="text"></div>
 
-    <!-- Audio -->
-    <audio id="bgMusic" loop>
-        <source src="Steve Lacy - Dark Red (Lyrics).mp3" type="audio/mpeg">
-    </audio>
-    <audio id="typeSound">
-        <source src="typewriter.mp3" type="audio/mpeg">
-    </audio>
+<script>
+const message = ` IFEOLUWA <br> You dont know me. But I know you. <br> And I know where you will be on the 13th of August, 2025. <br> If you wish to live you must follow my instructions <br> You will solve every clue <br> You will unlock every code <br> Fail? You wind up dead on your birthday.<br> Your time stars now';
+const textEl = document.getElementById('text');
+let index = 0;
 
-    <script>
-        const text = `Ifeoluwa,\n\nYou do not know me. But I know you.\nAnd I know where you will be on 13th August 2025.\n\nIf you wish to live, you will follow every instruction.\nYou will solve every clue.\nYou will unlock every code.\n\nFail, the killing will be yours.\n\nYour time starts now.`;
-        
-        let index = 0;
-        const typingSpeed = 60;
-        const textElement = document.getElementById("text");
-        const typeSound = document.getElementById("typeSound");
-        const bgMusic = document.getElementById("bgMusic");
-        const continueElement = document.getElementById("continue");
-        const startOverlay = document.getElementById("startOverlay");
+function typeWriter() {
+  if(index < message.length) {
+    textEl.innerHTML += message.charAt(index);
+    index++;
+    setTimeout(typeWriter, 100); // slower typing speed
+  }
+}
 
-        function typeText() {
-            if (index < text.length) {
-                textElement.textContent += text.charAt(index);
-                
-                if (text.charAt(index) !== " " && text.charAt(index) !== "\n") {
-                    typeSound.currentTime = 0;
-                    typeSound.play();
-                }
-                
-                index++;
-                setTimeout(typeText, typingSpeed);
-            } else {
-                continueElement.style.display = "block";
-                document.body.addEventListener("click", () => {
-                    window.location.href = "levels.html?level=1";
-                });
-            }
-        }
+// Blood drips
+function createBloodDrip() {
+  const drip = document.createElement('div');
+  drip.classList.add('blood-drip');
+  drip.style.left = Math.random() * window.innerWidth + 'px';
+  drip.style.animationDuration = (1 + Math.random() * 2) + 's';
+  document.body.appendChild(drip);
+  setTimeout(() => drip.remove(), 3000);
+}
 
-        function createDrip() {
-            const drip = document.createElement("div");
-            drip.classList.add("blood-drip");
-            drip.style.left = (Math.random() * window.innerWidth) + "px";
-            drip.style.width = (Math.random() * 8 + 5) + "px";
-            drip.style.height = (Math.random() * 12 + 8) + "px";
-            drip.style.animationDuration = (Math.random() * 2 + 2) + "s";
-            document.body.appendChild(drip);
+// Spawn multiple drips continuously
+setInterval(createBloodDrip, 300);
 
-            setTimeout(() => {
-                drip.remove();
-            }, 3000);
-        }
+// Start typing
+typeWriter();
+// Function to create a "Tap to Continue" button
+function showContinueButton() {
+  const btn = document.createElement('button');
+  btn.innerText = "TAP TO CONTINUE";
+  btn.style.marginTop = "50px";
+  btn.style.padding = "15px 30px";
+  btn.style.fontSize = "1.2em";
+  btn.style.cursor = "pointer";
+  btn.style.backgroundColor = "red";
+  btn.style.color = "black";
+  btn.style.border = "none";
+  btn.style.borderRadius = "5px";
+  btn.onclick = () => {
+    window.location.href = "levels.html"; // go to your first level
+  };
+  document.body.appendChild(btn);
+}
+</script>
 
-        startOverlay.addEventListener("click", () => {
-            startOverlay.style.display = "none";
-            bgMusic.play();
-            typeText();
-            setInterval(createDrip, 300); // Drip every 0.3s
-        });
-    </script>
 </body>
 </html>
-
-
-
-
 
 
 
