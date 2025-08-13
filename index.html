@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File 13.08.2025</title>
     <style>
-        body {
+        body 
+        {
             background-color: black;
             color: red;
             font-family: 'Courier New', monospace;
@@ -92,6 +93,35 @@
     </style>
 </head>
 <body>
+    <!-- Tap to Start Button -->
+<div id="startScreen" style="display:flex; justify-content:center; align-items:center; height:100vh; background:black; color:red; flex-direction:column;">
+  <h1>File 13.08.2035</h1>
+  <p>Tap anywhere to continue...</p>
+</div>
+
+<!-- Audio -->
+<audio id="typeSound" src="typewriter.mp3" preload="auto"></audio>
+<audio id="bgMusic" src="Steve Lacy - Dark Red (lyrics).mp3" preload="auto" loop></audio>
+
+<script>
+  // Tap anywhere to start
+  document.getElementById("startScreen").addEventListener("click", function() {
+    // Hide start screen
+    this.style.display = "none";
+
+    // Play typewriter sound once
+    let typeSound = document.getElementById("typeSound");
+    typeSound.play().catch(err => console.log("Type sound error:", err));
+
+    // Start background music
+    let bgMusic = document.getElementById("bgMusic");
+    bgMusic.play().catch(err => console.log("BG music error:", err));
+
+    // Call your function to start the text animation or go to next level
+    startTextAnimation(); // <-- replace this with your actual function
+  });
+</script>
+
     <div id="startOverlay">[ Tap to begin ]</div>
 
     <div id="blood-pool"></div>
@@ -162,3 +192,4 @@
     </script>
 </body>
 </html>
+
