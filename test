@@ -1,0 +1,12 @@
+<body style="margin:0; background:black; color:red; display:flex; justify-content:center; align-items:center; height:100vh; flex-direction:column;">
+  <h1>File 13.08.2035</h1>
+  <button id="startBtn">Tap to Start</button>
+
+  <audio id="typeSound" src="typewriter.mp3" preload="auto"></audio>
+  <audio id="bgMusic" src="DarkRed.mp3" preload="auto" loop></audio>
+
+  <script>
+    const startBtn = document.getElementById("startBtn");
+    const typeSound = document.getElementById("typeSound");
+    const bgMusic = document.getElementById("bgMusic");
+
