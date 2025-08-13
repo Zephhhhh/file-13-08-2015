@@ -92,6 +92,40 @@
     </style>
 </head>
 <body>
+    <body style="margin:0; background:black; color:red; display:flex; justify-content:center; align-items:center; height:100vh; flex-direction:column;">
+  <h1>File 13.08.2025</h1>
+  <p>Tap anywhere to start</p>
+
+  <audio id="typeSound" src="typewriter.mp3" preload="auto"></audio>
+  <audio id="bgMusic" src="Steve Lacy - Dark Red (Lyrics).mp3" preload="auto" loop></audio>
+
+  <script>
+    const startScreen = document.body;
+    const typeSound = document.getElementById("typeSound");
+    const bgMusic = document.getElementById("bgMusic");
+
+    function startGame() {
+      // Remove the tap message
+      document.querySelector("p").style.display = "none";
+
+      // Play typewriter sound first
+      typeSound.play().catch(err => console.log("Type sound error:", err));
+
+      // Play background music
+      bgMusic.play().catch(err => console.log("BG music error:", err));
+
+      // Start your text animation
+      startTextAnimation(); // replace with your function
+    }
+
+    // Listen for the first user interaction
+    startScreen.addEventListener("click", function init() {
+      startGame();
+      
+    });
+  </script>
+</body>
+
      <div id="startOverlay">[ Tap to begin ]</div>
        <div id="blood-pool"></div>
 
